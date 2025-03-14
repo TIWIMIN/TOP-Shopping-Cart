@@ -1,34 +1,31 @@
-import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import Item from "../Item/Item";
 
 export default function Shop() {
-    const [items, setItems] = useState([]); 
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const getItems = async () => {
-      try {
-        const response = await fetch("https://fakestoreapi.com/products", {
-          mode: "cors",
-          signal,
-        });
-        const data = await response.json();
-        console.log(data);
-        setItems(data); 
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getItems();
-    return () => {
-        controller.abort(); 
-    }
-  }, []);
+  const { items, addToCart, decrementFromCart, removeFromCart } = useOutletContext();
+  console.log(items);  
 
   return (
     <>
-      <p>Shop</p>
+      <h2>Shop</h2>
+      <main>
+        {items.map((item) => {
+          return (
+            <Item
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              image={item.image}
+              price={item.price}
+              quantity={item.quantity}
+              addToCart={addToCart}
+              decrementFromCart={decrementFromCart}
+              removeFromCart={removeFromCart}
+            />
+          );
+        })}
+      </main>
     </>
   );
 }
