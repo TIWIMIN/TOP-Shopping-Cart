@@ -61,6 +61,7 @@ function App() {
 
   return (
     <>
+      <p>Hi</p>
       <header>
         <Link to="/">Juiced</Link>
         <nav>

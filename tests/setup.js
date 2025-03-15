@@ -1,9 +1,12 @@
-import { expect, afterEach } from 'vitest';
-import { cleanup } from '@testing-library/react';
-import * as matchers from "@testing-library/jest-dom/matchers";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-expect.extend(matchers);
-
-afterEach(() => {
-  cleanup();
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './tests/setup.js',
+  },
 });
